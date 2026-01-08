@@ -1,0 +1,63 @@
+# Multi-stage build for smaller final image
+FROM python:3.13-slim AS builder
+
+# Install build dependencies
+WORKDIR /build
+
+# Copy dependency files
+COPY pyproject.toml README.md ./
+COPY src ./src
+
+# Build wheel for faster installation
+RUN pip install --no-cache-dir build && \
+    python -m build --wheel
+
+# ============================================
+# Final stage - minimal runtime image
+# ============================================
+FROM python:3.13-slim
+
+# Metadata labels
+LABEL maintainer="barisaranga@gmail.com" \
+      description="Production-style service healthcheck CLI tool" \
+      version="1.0.0" \
+      org.opencontainers.image.source="https://github.com/BariSaranga/service_healthcheck"
+
+# Prevent Python from writing .pyc files and force stdout/stderr unbuffered
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Install security updates
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create non-root user with explicit UID for better security
+RUN useradd -m -u 1000 -s /bin/bash appuser
+
+# Copy wheel from builder
+COPY --from=builder /build/dist/*.whl /tmp/
+
+# Install the package
+RUN pip install --no-cache-dir /tmp/*.whl && \
+    rm -rf /tmp/*.whl
+
+# Switch to non-root user
+USER appuser
+
+# Create log directory
+RUN mkdir -p /home/appuser/logs
+
+# Set working directory
+WORKDIR /home/appuser
+
+# Health check (optional - adjust for your use case)
+# HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+#   CMD service-healthcheck localhost:8080 || exit 1
+
+# Default command shows help
+ENTRYPOINT ["service-healthcheck"]
+CMD ["--help"]

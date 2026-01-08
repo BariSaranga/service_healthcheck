@@ -1,0 +1,64 @@
+# Git files
+.git/
+.gitignore
+.github/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+healthcheck.log
+
+# Documentation (not needed in runtime image)
+README.md
+docs/
+
+# Dockerfile variants (don't need to copy these)
+Dockerfile
+Dockerfile.*
+
+# CI/CD (not needed in image)
+.github/
+
+# Other development files
+.editorconfig
+.pre-commit-config.yaml
+Makefile
