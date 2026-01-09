@@ -47,8 +47,8 @@ coverage.xml
 *.log
 healthcheck.log
 
-# Documentation (not needed in runtime image)
-README.md
+# Documentation
+# Note: README.md is needed by setuptools during build
 docs/
 
 # Dockerfile variants (don't need to copy these)
