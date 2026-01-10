@@ -82,5 +82,6 @@ jobs:
 
     - name: Test Docker image
       run: |
-        docker run --rm ghcr.io/${{ github.repository }}:${{ github.ref_name }}-${{ github.sha }} --help
-        docker run --rm ghcr.io/${{ github.repository }}:${{ github.ref_name }}-${{ github.sha }} google-dns:8.8.8.8:53
+        # Use the SHA tag which is always generated
+        docker run --rm ghcr.io/${{ github.repository }}:sha-${{ github.sha }} --help
+        docker run --rm ghcr.io/${{ github.repository }}:sha-${{ github.sha }} google-dns:8.8.8.8:53
