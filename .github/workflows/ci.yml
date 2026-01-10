@@ -79,9 +79,12 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        load: true
 
     - name: Test Docker image
       run: |
-        # Use the SHA tag which is always generated
-        docker run --rm ghcr.io/${{ github.repository }}:sha-${{ github.sha }} --help
-        docker run --rm ghcr.io/${{ github.repository }}:sha-${{ github.sha }} google-dns:8.8.8.8:53
+        # Test the locally built image using the first tag
+        IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+        echo "Testing image: $IMAGE_TAG"
+        docker run --rm $IMAGE_TAG --help
+        docker run --rm $IMAGE_TAG google-dns:8.8.8.8:53
