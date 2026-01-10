@@ -1,6 +1,7 @@
 # Service Healthcheck
 
-[![CI](https://github.com/your-username/service_healthcheck/workflows/CI/badge.svg)](https://github.com/your-username/service_healthcheck/actions)
+[![CI](https://github.com/BariSaranga/service_healthcheck/actions/workflows/ci.yml/badge.svg)](https://github.com/BariSaranga/service_healthcheck/actions)
+[![Docker](https://img.shields.io/badge/docker-ghcr.io-blue)](https://github.com/BariSaranga/service_healthcheck/pkgs/container/service_healthcheck)
 
 Production-style CLI tool for checking service health via TCP and optional HTTPS connectivity.
 
@@ -19,7 +20,7 @@ Production-style CLI tool for checking service health via TCP and optional HTTPS
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/service_healthcheck.git
+git clone https://github.com/BariSaranga/service_healthcheck.git
 cd service_healthcheck
 
 # Install in development mode
@@ -197,7 +198,7 @@ python -m service_healthcheck db:localhost:5432
 
 ```bash
 # Clone repository
-git clone https://github.com/your-username/service_healthcheck.git
+git clone https://github.com/BariSaranga/service_healthcheck.git
 cd service_healthcheck
 
 # Create virtual environment
